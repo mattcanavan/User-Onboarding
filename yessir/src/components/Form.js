@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function Form(props) {
-    const { values, inputChange } = props
+    const { values, inputChange, submit } = props
 
     const onChange = event => {
         const { name, value, type, checked } = event.target
@@ -9,8 +9,14 @@ export default function Form(props) {
         const valueToUse = type === 'checkbox'? checked : value;  
         inputChange(name, valueToUse)
     }
+
+    const onSubmit = evt => {
+        evt.preventDefault()
+        submit()
+      }
+
     return (
-        <form className='formContainer'>
+        <form className='formContainer' onSubmit={onSubmit}>
 
             <label htmlFor='fnameInput'>Full Name</label>
             <input
