@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Form from './components/Form'
 import schema from './validation/formSchema'
@@ -17,12 +17,15 @@ const initialFormErrors = {
   fname: '',        //text input
   email: '',        //text input
   password: '',     //text input
-  // tosCheckbox: '?', //checkbox
+  tosCheckbox: false, //checkbox
 }
+
+const initialDisabled = true
 
 function App() {
   const [formValues, setFormValues] = useState(initalFormValues)  //state to hold form values
   const [formErrors, setFormErrors] = useState(initialFormErrors) // object
+  const [disabled, setDisabled] = useState(initialDisabled)       // boolean
 
   //////////////// EVENT HANDLERS ////////////////
   const inputChange = (name, value) => {
@@ -62,6 +65,14 @@ function App() {
         });
     }
 
+    //////////////// SIDE EFFECT ////////////////
+    useEffect(() => {
+      /* Each time the form value state is updated, check to see if it is valid per our schema. 
+      This will allow us to enable/disable the submit button.*/
+
+      schema.isValid(formValues)
+        .then(valid => { setDisabled(!valid) })
+    }, [formValues])
 
   return (
     <div className="App">
@@ -71,6 +82,7 @@ function App() {
           values={formValues}
           inputChange={inputChange}
           submit={formSubmit}
+          disabled={disabled}
           errors={formErrors}
         />
       </div>

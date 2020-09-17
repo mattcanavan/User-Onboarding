@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function Form(props) {
-    const { values, inputChange, submit, errors } = props
+    const { values, inputChange, submit, disabled, errors } = props
 
     const onChange = event => {
         const { name, value, type, checked } = event.target
@@ -62,7 +62,7 @@ export default function Form(props) {
             <br />
 
             <div className='submit'>
-                <button>submit</button>
+                <button disabled={disabled}>submit</button>
             </div>
             <div className='errors'>
                 {/* 🔥 RENDER THE VALIDATION ERRORS HERE */}

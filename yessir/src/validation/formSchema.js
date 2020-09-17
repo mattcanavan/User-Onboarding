@@ -11,5 +11,6 @@ export default yup.object().shape({
         .required('A password is required')
         .min(8, 'Password must be 8 characters or more'),
     //checkboxes
-    tosCheckbox: yup.boolean(),
+    tosCheckbox: yup.boolean()
+        .oneOf([true], 'Please agree to Terms of Service')
 })
